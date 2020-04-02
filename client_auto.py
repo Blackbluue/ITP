@@ -9,8 +9,10 @@ def main():
         s.connect((HOST, PORT))
         s.sendall(b"Hello")
         question = s.recv(1024).decode()
+        temp = question.split()[-3:]
+        temp[-1] = temp[-1].rstrip("?")
+        answer = str(eval("".join(temp)))
         while True:
-            answer = str(eval(input(f"{question}: ")))
             s.sendall(answer.encode())
             data = s.recv(1024).decode()
             print(data)
